@@ -31,7 +31,6 @@ var intentDialog = new builder.IntentDialog({recognizers: [luisRecognizer]});
 
 intentDialog.matches(/\b(hi|hello|hey|howdy)\b/i, '/sayHi')
     .matches("getNews", '/topNews')
-    .matches('describeImage', '/describeImage')
     .onDefault(builder.DialogAction.send("Sorry, I didn't understand what you said."));
 
 bot.dialog('/', intentDialog);
