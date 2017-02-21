@@ -89,7 +89,7 @@ bot.dialog('/topNews', [
 
 bot.dialog('/describeImage', [
     function (session){
-        session.send('Try saying things like "Describe image"');
+        session.send('Type an image url"');
         // Ask the user which category they would like
         // Choices are separated by |
         //builder.Prompts.choice(session, "Which category would you like?", "Technology|Science|Sports|Business|Entertainment|Politics|Health|World|(quit)");
@@ -108,7 +108,7 @@ bot.dialog('/describeImage', [
                     'Content-Type': 'application/json'
                 },
                 body: {
-                    url:  results.response.entity
+                    url:  {"url": results.response.entity}
                 },
                 json: true
             }
