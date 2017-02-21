@@ -90,10 +90,11 @@ bot.dialog('/topNews', [
 bot.dialog('/describeImage', [
     function (session){
         session.send('Type an image url');
+        builder.Prompts.choice(session, "Type an image url");
         // Ask the user which category they would like
         // Choices are separated by |
         //builder.Prompts.choice(session, "Which category would you like?", "Technology|Science|Sports|Business|Entertainment|Politics|Health|World|(quit)");
-    }, function (session, results, next){
+    }, function (session, results){
         // The user chose a category
         if (results.response && results.response.entity !== '(quit)') {
            //Show user that we're processing their request by sending the typing indicator
