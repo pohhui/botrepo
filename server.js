@@ -89,7 +89,7 @@ bot.dialog('/topNews', [
 
 bot.dialog('/describeImage', [
     function (session){
-        session.send('Type an image url"');
+        session.send('Type an image url');
         // Ask the user which category they would like
         // Choices are separated by |
         //builder.Prompts.choice(session, "Which category would you like?", "Technology|Science|Sports|Business|Entertainment|Politics|Health|World|(quit)");
@@ -99,7 +99,7 @@ bot.dialog('/describeImage', [
            //Show user that we're processing their request by sending the typing indicator
             session.sendTyping();
             // Build the url we'll be calling to get top news
-            var url = "https://westus.api.cognitive.microsoft.com/vision/v1.0/describe[?" + "1" + "]?";
+            var url = "https://westus.api.cognitive.microsoft.com/vision/v1.0/describe?1";
             var options = {
                 method: 'POST', // thie API call is a post request
                 uri: url,
