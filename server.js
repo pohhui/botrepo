@@ -31,7 +31,7 @@ var intentDialog = new builder.IntentDialog({recognizers: [luisRecognizer]});
 
 intentDialog.matches(/\b(hi|hello|hey|howdy)\b/i, '/sayHi')
     .matches("getNews", '/topNews')
-    .matches('analyseImage', '/analyseImage')
+    .matches('describeImage', '/describeImage')
     .onDefault(builder.DialogAction.send("Sorry, I didn't understand what you said."));
 
 bot.dialog('/', intentDialog);
@@ -87,9 +87,9 @@ bot.dialog('/topNews', [
     }
 ]);
 
-bot.dialog('/analyseImage', [
+bot.dialog('/describeImage', [
     function (session){
-        session.send('Try saying things like "Scan image"');
+        session.send('Try saying things like "Describe image"');
         // Ask the user which category they would like
         // Choices are separated by |
         //builder.Prompts.choice(session, "Which category would you like?", "Technology|Science|Sports|Business|Entertainment|Politics|Health|World|(quit)");
@@ -99,22 +99,25 @@ bot.dialog('/analyseImage', [
            //Show user that we're processing their request by sending the typing indicator
             session.sendTyping();
             // Build the url we'll be calling to get top news
-            var url = "https://api.cognitive.microsoft.com/bing/v5.0/news/?" 
-                + "category=" + results.response.entity + "&count=10&mkt=en-US&originalImg=true";
-            // Build options for the request
+            var url = "https://westus.api.cognitive.microsoft.com/vision/v1.0/describe[?" + "1" + "]?";
             var options = {
+                method: 'POST', // thie API call is a post request
                 uri: url,
                 headers: {
-                    'Ocp-Apim-Subscription-Key': BINGSEARCHKEY
+                    'Ocp-Apim-Subscription-Key': 'aa18e86e4f0f4fc98b29bfb6d7dc84b2',
+                    'Content-Type': 'application/json'
                 },
-                json: true // Returns the response in json
+                body: {
+                    url:  results.response.entity
+                },
+                json: true
             }
             //Make the call
             rp(options).then(function (body){
                 // The request is successful
-                //console.log(body); // Prints the body out to the console in json format
-                //session.send("Managed to get your news.");
-                sendTopNews(session, results, body);
+                console.log(body); // Prints the body out to the console in json format
+                session.send("Managed to get your description.");
+                //sendTopNews(session, results, body);
             }).catch(function (err){
                 // An error occurred and the request failed
                 console.log(err.message);
